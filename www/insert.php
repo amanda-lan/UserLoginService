@@ -26,8 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
     }
         
     if (empty($u_CPassword)){
-        die("Please re-enter your password");
-    }   
+        die("Please confirm your password");
+    } 
+    if ($u_Password != $u_CPassword){
+        die("Your password does not match, please enter again");
+    }    
     
     $statement = $conn->prepare("INSERT INTO Users (Username, Password, CPassword) VALUES(:u_name, :u_Password, :u_CPassword)"); //prepare sql insert query
     //bind parameters for markers, where (s = string, i = integer, d = double,  b = blob)

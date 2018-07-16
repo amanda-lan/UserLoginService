@@ -1,9 +1,13 @@
-<?php
+<html>
+<body>
 
-phpinfo();
+<form action="insert.php" method="post">
+Username: <input type="text" name="Username"><br>
+Password: <input type="text" name="Password"><br>
+Confirm Password: <input type="text" name="ConfirmPassword"><br>
+<input type="submit" value="Submit" />
+</form>
 
-echo "Hello World!";
-echo "Hello World!";
 
-trigger_error('haha');
-?>
+</body>
+</html>
