@@ -11,6 +11,12 @@ try {
     $conn = new PDO("mysql:host=$servername;dbname=UserLoginDB", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //$conn->exec($sql);
+    echo "Connection successfully"; 
+    }
+catch(PDOException $e){
+    echo "Connection failed: " . $e->getMessage();
+    }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
     
@@ -48,13 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
     }
 }
 
-//$conn->exec($sql);
-    echo "Connection successfully"; 
-    }
-catch(PDOException $e)
-    {
-    echo "Connection failed: " . $e->getMessage();
-    }
+
 
 
 ?>
