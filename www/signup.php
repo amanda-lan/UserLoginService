@@ -1,7 +1,8 @@
 <?php
+require_once "index.php";
+require_once "pdoconnection.php";
 
-include "index.php";
-include "pdoconnection.php";
+
 
    if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
     
@@ -22,19 +23,34 @@ include "pdoconnection.php";
     } 
     if ($u_password != $u_cpassword){
         die("Your password does not match, please enter again");
-    }    
-    
-    $statement = $conn->prepare("INSERT INTO Users (Username, Password, CPassword) VALUES(:u_name, :u_Password, :u_CPassword)"); //prepare sql insert query
+    }
+
+    $stmt = $conn->prepare('SELECT Username FROM Users WHERE Username = :u_name');
+    $stmt->bindParam(':u_name', $u_name);
+    $stmt->execute();
+
+    if ($stmt->fetchColumn(0) == $u_name){
+        echo "Username has already exist!" . "<br>";
+    } else {
+
+        $statement = $conn->prepare("INSERT INTO Users (Username, Password, CPassword) VALUES(:u_name, :u_Password, :u_CPassword)"); //prepare sql insert query
     //bind parameters for markers, where (s = string, i = integer, d = double,  b = blob)
     /*$statement->bind_param('sss', $u_name, $u_Password, $u_CPassword); //bind values and execute insert query*/
-    $u_password = password_hash($u_password, PASSWORD_DEFAULT);
-    $statement->bindParam(':u_name', $u_name);
-    $statement->bindParam(':u_Password', $u_password);
-    $statement->bindParam(':u_CPassword', $u_cpassword);
-    $statement->execute();
+        $hashed_password = password_hash($u_password, PASSWORD_DEFAULT);
+        $statement->bindParam(':u_name', $u_name);
+        $statement->bindParam(':u_Password', $hashed_password);
+        $statement->bindParam(':u_CPassword', $u_cpassword);
+        $statement->execute();
     
     echo "Hello " . $u_name. "!, your message has been saved!";
+
+    $_SESSION["userinfo_name"] = $u_name;
+    print_r($_SESSION);
+
+    }
+
    
    }
 
 ?>
+

@@ -12,7 +12,7 @@ $options = [
 
 try {
     $conn = new PDO($dsn, $dbusername, $dbpassword, $options);
-    echo "Connection successfully"; 
+    echo "Connection successfully" . "<br>"; 
     }
 catch(PDOException $e){
     echo "Connection failed: " . $e->getMessage();
