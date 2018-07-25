@@ -1,5 +1,4 @@
 <?php
-
 $dbusername = "root";
 $dbpassword = "lw0105~LW";
 
