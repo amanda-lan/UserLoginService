@@ -1,11 +1,14 @@
 <?php
 //require_once "pdoconnection.php";
 //require_once "signin.php";
-
+session_start();
 //check user login or not
 if(!isset($_SESSION['Username'])){
-	echo 'SESSION IS NOT SET ' . $_SESSION['Username'] . '<br>';
- 	//header('Location: index.php');
+	//echo 'SESSION IS NOT SET ' . $_SESSION['Username'] . '<br>';
+ 	header('Location: index.php');
+}else{
+
+	echo 'Welcome ' . $_SESSION['Username'] . '<br>';
 }
 
 // logout
@@ -16,7 +19,7 @@ if(isset($_POST['Logout'])){
  	$days = 30;
  	setcookie ('rememberme','', time() - ($days * 24 * 60 * 60 * 1000));
  	echo 'Logout <br>';
- 	//header('Location: index.php');
+ 	header('Location: index.php');
 }
 ?>
 

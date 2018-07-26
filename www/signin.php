@@ -6,14 +6,14 @@ require_once "pdoconnection.php";
 if( isset($_SESSION['Username']) ){
 
     echo 'OLD SESSION ' . $_SESSION['Username'] . '<br>';
-   // header('Location: home.php');
-   // exit;
+    header('Location: home.php');
+    exit;
 }else if( isset($_COOKIE['rememberme'] )){
     echo 'COOKIE IS SET ' . $_COOKIE['rememberme'] . '<br>';
     $u_name = $_COOKIE['rememberme'];
     $_SESSION['Username'] = $u_name; 
-    //header('Location: home.php');
-   // exit;
+    header('Location: home.php');
+    exit;
 }
 
 
@@ -53,8 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
             echo 'COOKIE IS SET ' . $_COOKIE['rememberme'] . '<br>';
             $_SESSION['Username'] = $u_name;
             echo 'SESSION IS SET ' . $_SESSION['Username'] . '<br>';
-            //header('Location: home.php');
-            //exit; 
+            header('Location: home.php');
+            exit; 
         } else { 
             echo 'Invalid password.';
         }
