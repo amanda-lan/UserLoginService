@@ -32,10 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
             echo 'Welcome ' . $u_name .'<br>';
             if( isset($_POST['rememberme'])){
             // Set cookie variables
-            $value = base64_encode($u_name . $dbpassword);
+            $value = base64_encode($u_name . "," . $dbpassword);
             setcookie ('rememberme',$value, time() + 846000);
             //setcookie ('rememberme', $value, time() + 60);
-            }
+            } 
             echo 'COOKIE IS SET ' . $_COOKIE['rememberme'] . '<br>';
             $_SESSION['Username'] = $u_name;
             echo 'SESSION IS SET ' . $_SESSION['Username'] . '<br>';

@@ -9,7 +9,7 @@ if(isset($_SESSION['Username'])){
 }else if(isset($_COOKIE['rememberme'])){
     //echo 'COOKIE IS SET ' . $_COOKIE['rememberme'] . '<br>';
     //$u_name = password_veriffy($_COOKIE['rememberme'],PASSWORD_DEFAULT);
-    $up = explode(',' ,base64_decode($_COOKIE['hash']));
+    $up = explode(',' ,base64_decode($_COOKIE['rememberme']));
     $u_name = $up[0];
     $_SESSION['Username'] = $u_name; 
     header('Location: home.php');
