@@ -1,19 +1,28 @@
 
 <?php
-// Starting session
+require_once "pdoconnection.php";
 session_start();
 if(isset($_SESSION['Username'])){
-	//echo 'OLD SESSION ' . $_SESSION['Username'] . '<br>';
     header('Location: home.php');
     exit;
 }else if(isset($_COOKIE['rememberme'])){
-    //echo 'COOKIE IS SET ' . $_COOKIE['rememberme'] . '<br>';
-    //$u_name = password_veriffy($_COOKIE['rememberme'],PASSWORD_DEFAULT);
     $up = explode(',' ,base64_decode($_COOKIE['rememberme']));
     $u_name = $up[0];
-    $_SESSION['Username'] = $u_name; 
-    header('Location: home.php');
-    exit;
+    echo "Username:" . $up[0] . "<br>";
+    $hashed_password = $up[1];
+    echo "Password:" . $up[1] . "<br>"; 
+    $stmt = $conn->prepare('SELECT Password FROM Users WHERE Username = :u_name');
+    $stmt->bindParam(':u_name', $u_name);
+    $stmt->execute();
+    $dbpassword = $stmt->fetchColumn(0);
+	echo $dbpassword . "<br>";
+    if ($hashed_password == $dbpassword){
+		$_SESSION['Username'] = $u_name; 
+   		header('Location: home.php');
+    	exit;
+    }else{
+    	echo "Wanining: Someone try to steal your account!";
+    }
 }
 ?>
 <!DOCTYPE html>
