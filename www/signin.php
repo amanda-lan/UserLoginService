@@ -3,20 +3,6 @@
 require_once "newindex.php";
 require_once "pdoconnection.php";
 
-if( isset($_SESSION['Username']) ){
-
-    echo 'OLD SESSION ' . $_SESSION['Username'] . '<br>';
-    header('Location: home.php');
-    exit;
-}else if( isset($_COOKIE['rememberme'] )){
-    echo 'COOKIE IS SET ' . $_COOKIE['rememberme'] . '<br>';
-    $u_name = $_COOKIE['rememberme'];
-    $_SESSION['Username'] = $u_name; 
-    header('Location: home.php');
-    exit;
-}
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
     
     $u_name = filter_var($_POST["Username"], FILTER_SANITIZE_STRING); //set PHP variables like this so we can use them anywhere in code below
@@ -44,11 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {//Check it is comming from a form
 
         if (password_verify($u_password, $dbpassword)) {
             echo 'Welcome ' . $u_name .'<br>';
-            if( isset($_POST['rememberme']) && $_POST['rememberme'] == 'YES'){
+            if( isset($_POST['rememberme'])){
             // Set cookie variables
-            $days = 30;
-            $value = $u_name;
-            setcookie ('rememberme', $value, time() + ($days * 24 * 60 * 60 * 1000));
+            $value = base64_encode($u_name . $dbpassword);
+            setcookie ('rememberme',$value, time() + 846000);
+            //setcookie ('rememberme', $value, time() + 60);
             }
             echo 'COOKIE IS SET ' . $_COOKIE['rememberme'] . '<br>';
             $_SESSION['Username'] = $u_name;

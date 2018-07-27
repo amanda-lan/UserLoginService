@@ -5,7 +5,7 @@ session_start();
 //check user login or not
 if(!isset($_SESSION['Username'])){
 	//echo 'SESSION IS NOT SET ' . $_SESSION['Username'] . '<br>';
- 	header('Location: index.php');
+ 	header('Location: newindex.php');
 }else{
 
 	echo 'Welcome ' . $_SESSION['Username'] . '<br>';
@@ -16,10 +16,11 @@ if(isset($_POST['Logout'])){
 	session_destroy();
 
  // Remove cookie variables
- 	$days = 30;
- 	setcookie ('rememberme','', time() - ($days * 24 * 60 * 60 * 1000));
+ 	//$days = 30;
+ 	//setcookie ('rememberme','', time() - ($days * 24 * 60 * 60 * 1000));
+ 	setcookie ('rememberme','', time() - 60);
  	echo 'Logout <br>';
- 	header('Location: index.php');
+ 	header('Location: newindex.php');
 }
 ?>
 
