@@ -1,6 +1,6 @@
 <?php
 require_once "index.php";
-require_once "pdoconnection.php";
+require_once "db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //Check it is comming from a form
@@ -23,18 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		die("Your password does not match, please enter again");
 	}
 
-	$stmt = $conn->prepare('SELECT Username FROM Users WHERE Username = :u_name');
-	$stmt->bindParam(':u_name', $u_name);
-	$stmt->execute();
-	if ($stmt->fetchColumn(0) == $u_name) {
+	$dbresult = DB::queryUser("SELECT Username FROM Users WHERE Username = :", "u_name", $u_name);
+	if ($dbresult) {
 		echo "Username has already exist!" . "<br>";
 	} else {
-		$statement = $conn->prepare("INSERT INTO Users (Username, Password, CPassword) VALUES(:u_name, :u_Password, :u_CPassword)");
 		$hashed_password = password_hash($u_password, PASSWORD_DEFAULT);
-		$statement->bindParam(':u_name', $u_name);
-		$statement->bindParam(':u_Password', $hashed_password);
-		$statement->bindParam(':u_CPassword', $u_cpassword);
-		$statement->execute();
+		DB::insertNewUser($u_name, $hashed_password, $u_cpassword);
 		echo "Hello " . $u_name . "!, your message has been saved!";
 		$_SESSION['Username'] = $u_name;
 	}

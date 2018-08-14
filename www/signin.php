@@ -1,6 +1,6 @@
 <?php
 require_once "newindex.php";
-require_once "pdoconnection.php";
+require_once "db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //Check it is comming from a form
@@ -12,17 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if (empty($u_password)) {
 		die("Please enter your password");
 	}
-	$statement = $conn->prepare("SELECT Username FROM Users WHERE Username = :u_name");
-	$statement->bindParam(':u_name', $u_name);
-	$statement->execute();
-	$dbusername = $statement->fetchColumn(0);
+	// $temp = "u_name";
+	$dbresult = DB::queryUser("SELECT Username, Password FROM Users WHERE Username = :", "u_name", $u_name);
+	$dbusername = $dbresult[0]['Username'];
 	//check if username and password match the database value
 	if ($dbusername == $u_name) {
-		$statement = $conn->prepare("SELECT Password FROM Users WHERE Username = :u_name");
-		$statement->bindParam(':u_name', $u_name);
-		$statement->execute();
-		$dbpassword = $statement->fetchColumn(0);
-		echo $dbpassword . "<br>";
+
+		$dbpassword = $dbresult[0]['Password'];
 
 		if (password_verify($u_password, $dbpassword)) {
 			echo 'Welcome ' . $u_name . '<br>';
