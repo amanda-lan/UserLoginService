@@ -1,6 +1,5 @@
-
 <?php
-require_once "pdoconnection.php";
+require_once "db.php";
 session_start();
 if (isset($_SESSION['Username'])) {
 	header('Location: home.php');
