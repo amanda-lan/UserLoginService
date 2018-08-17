@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			//Set session variables
 			$_SESSION['Username'] = $u_name;
 			echo 'SESSION IS SET ' . $_SESSION['Username'] . '<br>';
-			header('Location: home.php');
+			header('Location: logout.php');
 			exit;
 		} else {
 			echo 'Invalid password.';

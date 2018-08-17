@@ -1,16 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home Page</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<h1>Homepage</h1>
+	<ul>
+		<li><a href="index.php">Sign Up</a></li>
+		<li><a href="newindex.php">Sign In</a></li>
+	</ul>
+</body>
+</html>
 <?php
 session_start();
-if (!isset($_SESSION['Username'])) {
-	header('Location: newindex.php');
-	exit;
-} else {
+if (isset($_SESSION['Username'])) {
 	echo 'Welcome ' . $_SESSION['Username'] . '<br>';
 }
-if (isset($_GET['Logout'])) {
-	header('Location: logout.php');
-	exit;
-}
-<h1>Homepage</h1>
-<form method='get' action="">
-<input type="submit" value="Logout" name="Logout">
-</form>

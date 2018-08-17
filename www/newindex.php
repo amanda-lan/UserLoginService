@@ -2,7 +2,7 @@
 require_once "db.php";
 session_start();
 if (isset($_SESSION['Username'])) {
-	header('Location: home.php');
+	header('Location: logout.php');
 	exit;
 } else if (isset($_COOKIE['rememberme'])) {
 	$up = explode(',', base64_decode($_COOKIE['rememberme']));
@@ -17,7 +17,7 @@ if (isset($_SESSION['Username'])) {
 	echo $dbpassword . "<br>";
 	if ($hashed_password == $dbpassword) {
 		$_SESSION['Username'] = $u_name;
-		header('Location: home.php');
+		header('Location: logout.php');
 		exit;
 	} else {
 		echo "Wanining: Someone try to steal your account!";
