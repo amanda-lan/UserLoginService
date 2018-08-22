@@ -64,7 +64,7 @@ if (isset($_SESSION['Username'])) {
 if (isset($_GET["Logout"])) {
 	session_destroy();
 	setcookie('rememberme', '', time() - 864000);
-	header("Location: home.php");
+	header("Location: index.php");
 	exit;
 }
 ?>
