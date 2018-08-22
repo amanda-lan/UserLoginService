@@ -41,7 +41,10 @@ if (isset($_POST['form_submitted'])) {
 		$hashed_password = password_hash($u_password, PASSWORD_DEFAULT);
 		DB::insertNewUser($u_name, $hashed_password, $u_cpassword);
 		echo "Hello " . $u_name . "! Your message has been saved!";
+		session_start();
 		$_SESSION['Username'] = $u_name;
+		header("Location: home.php");
+		exit;
 	}
 } else {
 	?>
@@ -51,6 +54,6 @@ if (isset($_POST['form_submitted'])) {
             Confirm Password: <input type="password" placeholder="Repeat Password" name="ConfirmPassword"><br>
             <input type="hidden" name="form_submitted" value="1"/>
             <input type="submit" name="Sign Up" value="Sign Up" />
-    </form>
+            </form>
 <?php
 }
